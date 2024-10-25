@@ -25,14 +25,14 @@ export const NavigationItem = ({ id, name, imageUrl }: NavigationItemProps) => {
       >
         <div
           className={cn(
-            "absolute left-0 bg-primary rounded-full transition-all w-[4px]",
+            "absolute left-0 top-[50%] -translate-y-[50%] bg-primary rounded-full transition-all w-[4px]",
             params?.serverid !== id && "group-hover:h-[50px]",
-            params?.serverid === id ? "h-[50px]" : "h-[0px]"
+            params?.serverid === id ? "h-[50px]" : "h-[10px]"
           )}
         />
         <div
           className={cn(
-            "relative flex mx-3 h-[48px] w-[48px] rounded[25px] group-hover:rounded-[16px] transition-all overflow-hidden",
+            "relative flex mx-3 h-[48px] w-[48px] rounded-[25px] group-hover:rounded-[16px] transition-all overflow-hidden",
             params.serverid === id &&
               "bg-primary/10 text-primary rounded-[16px]"
           )}

@@ -34,7 +34,7 @@ model Server {
   id       String @id @default(uuid())
   name     String
   imageUrl String @db.Text
-  inviteUrl String @db.Text
+  inviteUrl String @unique
 
   members Member[]
   channels Channel[]

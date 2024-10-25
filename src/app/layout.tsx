@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
+import ModalProvider from "@/components/providers/modal-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,6 +42,7 @@ export default function RootLayout({
             enableSystem={false}
             storageKey="discord-clone"
           >
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </body>
