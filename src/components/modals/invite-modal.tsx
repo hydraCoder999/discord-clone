@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Dialog, DialogHeader } from "../ui/dialog";
 import { DialogContent, DialogTitle } from "@radix-ui/react-dialog";
 
@@ -13,7 +13,6 @@ import { Button } from "../ui/button";
 import axios from "axios";
 
 export const InviteModal = (): React.ReactNode => {
-  const [isMounted, setIsMounted] = useState(false);
   const { type, isOpen, onClose, data, onOpen } = useModal();
 
   const origin = useOrigin();
@@ -49,14 +48,6 @@ export const InviteModal = (): React.ReactNode => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return null;
-  }
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>

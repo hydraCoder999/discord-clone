@@ -4,7 +4,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Dialog, DialogFooter, DialogHeader } from "../ui/dialog";
 import {
   DialogContent,
@@ -25,6 +25,7 @@ import { FileUplod } from "../file-upload";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-model-provider";
+
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Server Name is required",
@@ -33,13 +34,14 @@ const formSchema = z.object({
     message: "ImageUrl  is required",
   }),
 });
-export const CreateServerModal = (): React.ReactNode => {
-  // For the From Hydration
 
-  const { type, isOpen, onClose } = useModal();
+export const EditServerModal = (): React.ReactNode => {
+  const { type, isOpen, onClose, data } = useModal();
   const rounter = useRouter();
 
-  const isModalOpen = isOpen && type === "createServer";
+  const { server } = data;
+
+  const isModalOpen = isOpen && type === "editServer";
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -53,7 +55,7 @@ export const CreateServerModal = (): React.ReactNode => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/servers", values);
+      await axios.patch(`/api/servers/${server?.id}`, values);
       form.reset();
       rounter.refresh();
       onClose();
@@ -67,16 +69,23 @@ export const CreateServerModal = (): React.ReactNode => {
     onClose();
   };
 
+  useEffect(() => {
+    if (isModalOpen) {
+      form.setValue("name", server?.name || "");
+      form.setValue("imageUrl", server?.imageUrl || "");
+    }
+  }, [server, form]);
+
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black overflow-hidden border-2 border-[#000] dark:border-0">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create Your Server
+            Customize Your Server
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Create your a Personality with a name and image , You always Change
-            later
+            Customize your a Personality with a name and image , You always
+            Change later
           </DialogDescription>
         </DialogHeader>
 
@@ -127,7 +136,7 @@ export const CreateServerModal = (): React.ReactNode => {
 
             <DialogFooter className="bg-gray-100 px-6 py-4 text-center ">
               <Button variant={"primary"} disabled={isLoading}>
-                Create
+                Save
               </Button>
             </DialogFooter>
           </form>
