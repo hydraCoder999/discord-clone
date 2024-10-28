@@ -34,7 +34,7 @@ export default async function Layout({
         <ServerSideBar serverId={params.serverId} />
       </div>
 
-      <div className="h-full md:pl-60">{children}</div>
+      <div className="h-screen md:pl-60">{children}</div>
     </div>
   );
 }

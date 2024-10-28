@@ -22,7 +22,9 @@ export const ourFileRouter = {
   // For the Messgae File
   messageFile: f(["image", "pdf"], {})
     .middleware(() => handleAuth())
-    .onUploadComplete(() => {}),
+    .onUploadComplete((file) => {
+      console.log(file);
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
