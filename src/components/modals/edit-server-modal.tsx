@@ -78,7 +78,7 @@ export const EditServerModal = (): React.ReactNode => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-white text-black overflow-hidden border-2 border-[#000] dark:border-0">
+      <DialogContent className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]   bg-white text-black overflow-hidden border-2 border-[#000] dark:border-0">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Customize Your Server

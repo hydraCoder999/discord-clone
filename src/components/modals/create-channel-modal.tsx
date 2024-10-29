@@ -64,7 +64,7 @@ export const CreateChannelModal = (): React.ReactNode => {
     try {
       const url = queryString.stringifyUrl({
         url: `/api/channels`,
-        query: { serverId: params.serverId },
+        query: { serverId: params?.serverId },
       });
       await axios.post(url, values);
       form.reset();
@@ -90,7 +90,7 @@ export const CreateChannelModal = (): React.ReactNode => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-white text-black overflow-hidden border-2 border-[#000] dark:border-0 min-w-[300px] md:min-w-[420px]">
+      <DialogContent className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]    bg-white text-black overflow-hidden border-2 border-[#000] dark:border-0 min-w-[300px] md:min-w-[420px]">
         <DialogHeader className="pt-8 px-6 ">
           <DialogTitle className="text-2xl text-center font-bold">
             Create Channel

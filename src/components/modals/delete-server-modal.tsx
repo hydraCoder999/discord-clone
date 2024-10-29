@@ -41,7 +41,7 @@ export const DeleteServerModal = (): React.ReactNode => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white text-black overflow-hidden  border-2 border-[#000] dark:border-0">
+      <DialogContent className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]   bg-white text-black overflow-hidden  border-2 border-[#000] dark:border-0">
         <DialogHeader className="py-3 w-[300px] md:w-[420px]">
           <DialogTitle className="text-2xl text-center font-bold">
             Delete Server

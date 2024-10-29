@@ -74,7 +74,7 @@ export const MessageFileModal = (): React.ReactNode => {
   return (
     <div className="h-screen w-screen flex items-center justify-center">
       <Dialog open={isModalOpen} onOpenChange={handleClose}>
-        <DialogContent className="bg-white text-black overflow-hidden">
+        <DialogContent className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] bg-white text-black overflow-hidden">
           <DialogHeader className="pt-8 px-6">
             <DialogTitle className="text-2xl text-center font-bold">
               Add an attachment
