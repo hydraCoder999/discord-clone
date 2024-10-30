@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const serverId = searchParams.get("serverId");
+    const serverId = searchParams?.get("serverId");
     if (!serverId) {
       return new NextResponse("Server Id Missing", {
         status: 400,

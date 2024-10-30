@@ -17,7 +17,7 @@ export default async function Layout({
 
   const server = await db.server.findUnique({
     where: {
-      id: params.serverId,
+      id: params?.serverId,
       members: {
         some: {
           profileId: profile.id,
@@ -31,7 +31,7 @@ export default async function Layout({
   return (
     <div className="h-full">
       <div className="w-0 md:flex fixed h-full md:w-60 z-20 flex-col inset-y-0 overflow-hidden">
-        <ServerSideBar serverId={params.serverId} />
+        <ServerSideBar serverId={params?.serverId} />
       </div>
 
       <div className="h-screen md:pl-60">{children}</div>

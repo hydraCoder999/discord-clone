@@ -10,7 +10,7 @@ export async function DELETE(
   try {
     const profile = await CurrentProfile();
     const { searchParams } = new URL(req.url);
-    const serverId = searchParams.get("serverId");
+    const serverId = searchParams?.get("serverId");
     if (!profile) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -19,7 +19,7 @@ export async function DELETE(
       return new NextResponse("Server ID is required", { status: 400 });
     }
 
-    if (!params.channelId) {
+    if (!params?.channelId) {
       return new NextResponse("Channel ID is required", { status: 400 });
     }
 
@@ -38,7 +38,7 @@ export async function DELETE(
       data: {
         channels: {
           delete: {
-            id: params.channelId,
+            id: params?.channelId,
             name: {
               not: "general",
             },
@@ -62,7 +62,7 @@ export async function PATCH(
     const profile = await CurrentProfile();
     const { name, type } = await req.json();
     const { searchParams } = new URL(req.url);
-    const serverId = searchParams.get("serverId");
+    const serverId = searchParams?.get("serverId");
     if (!profile) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -71,7 +71,7 @@ export async function PATCH(
       return new NextResponse("Server ID is required", { status: 400 });
     }
 
-    if (!params.channelId) {
+    if (!params?.channelId) {
       return new NextResponse("Channel ID is required", { status: 400 });
     }
 
@@ -95,7 +95,7 @@ export async function PATCH(
         channels: {
           update: {
             where: {
-              id: params.channelId,
+              id: params?.channelId,
               name: {
                 not: "general",
               },

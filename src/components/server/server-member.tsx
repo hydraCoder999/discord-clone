@@ -31,7 +31,7 @@ export const ServerMember = ({ member, server }: ServerMemberProps) => {
       onClick={onClick}
       className={cn(
         "group px-2 py-2 flex rounded-md items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1",
-        member.id === params.memberId && "bg-zinc-700/20 dark:bg-zinc-700"
+        member.id === params?.memberId && "bg-zinc-700/20 dark:bg-zinc-700"
       )}
     >
       <UserAvatar src={member.profile.imageUrl} />

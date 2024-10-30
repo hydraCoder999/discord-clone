@@ -12,13 +12,13 @@ export const DELETE = async (
     if (!profile) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    if (!params.serverId) {
+    if (!params?.serverId) {
       return new NextResponse("Server ID is required", { status: 400 });
     }
 
     const server = await db.server.delete({
       where: {
-        id: params.serverId,
+        id: params?.serverId,
         profileId: profile.id,
       },
     });
@@ -42,13 +42,13 @@ export const PATCH = async (
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!params.serverId) {
+    if (!params?.serverId) {
       return new NextResponse("Server ID is required", { status: 400 });
     }
 
     const server = await db.server.update({
       where: {
-        id: params.serverId,
+        id: params?.serverId,
         profileId: profile.id,
       },
       data: {

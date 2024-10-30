@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { AccessToken } from "livekit-server-sdk";
 
 export async function GET(req: NextRequest) {
-  const room = req.nextUrl.searchParams.get("room");
-  const username = req.nextUrl.searchParams.get("username");
+  const room = req.nextUrl.searchParams?.get("room");
+  const username = req.nextUrl.searchParams?.get("username");
   if (!room) {
     return NextResponse.json(
       { error: 'Missing "room" query parameter' },

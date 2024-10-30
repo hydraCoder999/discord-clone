@@ -33,7 +33,7 @@ export const NavigationItem = ({ id, name, imageUrl }: NavigationItemProps) => {
         <div
           className={cn(
             "relative flex mx-3 h-[48px] w-[48px] rounded-[25px] group-hover:rounded-[16px] transition-all overflow-hidden",
-            params.serverid === id &&
+            params?.serverid === id &&
               "bg-primary/10 text-primary rounded-[16px]"
           )}
         >

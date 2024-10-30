@@ -54,11 +54,11 @@ export default function ServerSearch({ data }: ServerSearchProps) {
   }) => {
     setOpen(false);
     if (type === "members") {
-      return router.push(`/server/${params.serverId}/conversations/${id}`);
+      return router.push(`/server/${params?.serverId}/conversations/${id}`);
     }
 
     if (type === "channel") {
-      return router.push(`/server/${params.serverId}/channels/${id}`);
+      return router.push(`/server/${params?.serverId}/channels/${id}`);
     }
   };
   return (

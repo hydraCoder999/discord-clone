@@ -21,7 +21,7 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
 
   const channel = await db.channel.findUnique({
     where: {
-      id: params.channelId,
+      id: params?.channelId,
       serverId: params?.serverId,
     },
   });

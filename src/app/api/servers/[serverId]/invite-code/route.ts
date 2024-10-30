@@ -12,7 +12,7 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 400 });
     }
 
-    if (!params.serverId) {
+    if (!params?.serverId) {
       return new NextResponse("Server Id is Missing", { status: 400 });
     }
     const server = await db.server.update({
