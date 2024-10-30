@@ -23,7 +23,7 @@ const ModalProvider = () => {
     return null;
   }
   return (
-    <div className="fixed top-0 left-0 w-full h-full flex item-center justify-center z-[999] pointer-events-none flex justify-center items-center transiton-all">
+    <div className="fixed z-[999]  grid place-items-center   pointer-events-none  transiton-all">
       <CreateServerModal />
       <InviteModal />
       <EditServerModal />

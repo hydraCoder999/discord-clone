@@ -11,29 +11,31 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
 
     const cursor = searchParams.get("cursor");
-    const channelId = searchParams.get("channelId");
+    const conversationId = searchParams.get("conversationId");
 
     if (!profile) {
       return new NextResponse("You must be logged in to view this page", {
         status: 401,
       });
     }
-    if (!channelId) {
-      return new NextResponse("Channel Id Missing", {
+    if (!conversationId) {
+      return new NextResponse("conversationId Missing", {
         status: 401,
       });
     }
 
-    let messages: Message[] = [];
+    let messages: DirectMessage[] = [];
 
     if (cursor) {
-      messages = await db.message.findMany({
+      messages = await db.directMessage.findMany({
         take: MESSAGES_BATCH,
         skip: 1,
         cursor: {
           id: cursor,
         },
-        where: { channelId },
+        where: {
+          conversationId: conversationId,
+        },
         include: {
           member: {
             include: {
@@ -46,10 +48,10 @@ export async function GET(req: Request) {
         },
       });
     } else {
-      messages = await db.message.findMany({
+      messages = await db.directMessage.findMany({
         take: MESSAGES_BATCH,
         where: {
-          channelId,
+          conversationId,
         },
         include: {
           member: {
