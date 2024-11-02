@@ -2,6 +2,7 @@ import { NextApiRequest } from "next";
 import { CurrentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
 import { NextApiResponseServerIO } from "../../../../../types";
+import { redisPublisher } from "@/lib/redis";
 
 export default async function handler(
   req: NextApiRequest,
@@ -98,8 +99,15 @@ export default async function handler(
     });
 
     const channelKey = `chat:${conversationId}:messages`;
-    res?.socket?.server?.io?.emit(channelKey, message);
-
+    try {
+      await redisPublisher.publish(
+        "MESSAGES",
+        JSON.stringify({ socketEmmitKey: channelKey, message })
+      );
+    } catch (error) {
+      console.log(error);
+      res?.socket?.server?.io?.emit(channelKey, message);
+    }
     return res.status(200).json(message);
   } catch (error) {
     console.log("[DIRECT_MESSAGES_POST] ", error);

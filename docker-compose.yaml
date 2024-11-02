@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  # PostgreSQL service
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # Redis service
+  redis:
+    image: redis/redis-stack:latest
+    ports:
+      - "6379:6379"
+      - "8001:8001" # Redis Stack GUI
+    volumes:
+      - redisdata:/data
+
+  # Next.js service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: discord-clone
+    ports:
+      - "3000:3000"
+    environment:
+      # Clerk keys
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      CLERK_SECRET_KEY: ${CLERK_SECRET_KEY}
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
+
+      # Supabase and PostgreSQL database connection
+      DATABASE_URL: ${DATABASE_URL}
+
+      # UploadThing settings
+      UPLOADTHING_SECRET: ${UPLOADTHING_SECRET}
+      UPLOADTHING_APP_ID: ${UPLOADTHING_APP_ID}
+      UPLOADTHING_TOKEN: ${UPLOADTHING_TOKEN}
+
+      # Site URL
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+
+      # Livekit configuration
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET}
+      NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL}
+
+      # Redis connection
+      REDIS_CONNECTION_STRING: ${REDIS_CONNECTION_STRING}
+
+    depends_on:
+      - postgres
+      - redis
+
+volumes:
+  pgdata:
+  redisdata:

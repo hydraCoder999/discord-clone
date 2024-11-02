@@ -3,6 +3,7 @@ import { NextApiResponseServerIO } from "../../../../../types";
 import { CurrentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
 import { MemberRole } from "@prisma/client";
+import { redisPublisher } from "@/lib/redis";
 
 export default async function handler(
   req: NextApiRequest,
@@ -135,7 +136,15 @@ export default async function handler(
 
     const updateKey = `chat:${channelId}:messages:update`;
 
-    res?.socket?.server?.io?.emit(updateKey, message);
+    try {
+      await redisPublisher.publish(
+        "MESSAGES",
+        JSON.stringify({ socketEmmitKey: updateKey, message })
+      );
+    } catch (publishError) {
+      console.error("Redis publish failed:", publishError);
+      res?.socket?.server?.io?.emit(updateKey, message);
+    }
 
     return res.status(200).json(message);
   } catch (error) {

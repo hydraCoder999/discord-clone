@@ -3,6 +3,7 @@ import { NextApiResponseServerIO } from "../../../../../types";
 import { CurrentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
 import { MemberRole } from "@prisma/client";
+import { redisPublisher } from "@/lib/redis";
 
 export default async function handler(
   req: NextApiRequest,
@@ -137,8 +138,14 @@ export default async function handler(
     }
 
     const updateKey = `chat:${conversationId}:messages:update`;
-
-    res?.socket?.server?.io?.emit(updateKey, directMessage);
+    try {
+      await redisPublisher.publish(
+        "MESSAGES",
+        JSON.stringify({ socketEmmitKey: updateKey, directMessage })
+      );
+    } catch (error) {
+      res?.socket?.server?.io?.emit(updateKey, directMessage);
+    }
 
     return res.status(200).json(directMessage);
   } catch (error) {

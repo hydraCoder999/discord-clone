@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  # Next.js service
+  app:
+    build:
+      context: .
+      dockerfile: DockerfileDev
+    image: discord-clone-dev
+    ports:
+      - "3000:3000"
+    environment:
+      # Clerk keys
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      CLERK_SECRET_KEY: ${CLERK_SECRET_KEY}
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
+
+      # Supabase and PostgreSQL database connection
+      DATABASE_URL: ${DATABASE_URL} # Ensure this is correctly set to use the service name
+
+      # UploadThing settings
+      UPLOADTHING_SECRET: ${UPLOADTHING_SECRET}
+      UPLOADTHING_APP_ID: ${UPLOADTHING_APP_ID}
+      UPLOADTHING_TOKEN: ${UPLOADTHING_TOKEN}
+
+      # Site URL
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+
+      # Livekit configuration
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET}
+      NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL}
+
+      # Redis connection
+      REDIS_CONNECTION_STRING: ${REDIS_CONNECTION_STRING}
